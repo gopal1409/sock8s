@@ -4,7 +4,7 @@ kind: Deployment #we are using deployment api Deployment
 metadata:
   name: nginx-deployment #inside your k8s cluster it shoudl create a deployment with this name so we are defining using metadata
 spec: #specification related to your deployment
-  replicas: 3 #inside your deployment we are create three pod using replicas
+  replicas: 3 #apply to kubeschedule #inside your deployment we are create three pod using replicas
   selector: #how this deployment is going to manage the replicas we are using selector and provide labels to all this pod
     matchLabels:
       app: nginx #labels all the label should be in key value format

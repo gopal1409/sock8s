@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Service 
+metadata:
+  name: deplyomentsrv
+spec:
+  type: LoadBalancer #ClusterIP NodePort
+  selector:
+    app: nginx 
+  ports:
+    - name: http
+      port: 80 #service port
+      targetPort: 80 #containerPort
