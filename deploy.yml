@@ -1,17 +1,20 @@
-apiVersion: apps/v1
-kind: Deployment 
+#to apply this code we use kubectl apply -f nameoftheyamlfile
+apiVersion: apps/v1 #so we invoking the apps/v1 api
+kind: Deployment #we are using deployment api Deployment
 metadata:
-  name: nginx-deployment
-spec:
-  replicas: 3
-  selector:
+  name: nginx-deployment #inside your k8s cluster it shoudl create a deployment with this name so we are defining using metadata
+spec: #specification related to your deployment
+  replicas: 3 #inside your deployment we are create three pod using replicas
+  selector: #how this deployment is going to manage the replicas we are using selector and provide labels to all this pod
     matchLabels:
-      app: nginx 
-  template:
+      app: nginx #labels all the label should be in key value format
+      #.spec.selector.matchLabels whcih is an ma key value 
+  #till here it has created three pod inside the pod we need to launch container using images
+  template: #we use an template to deploy three image inside your pod
     metadata:
       labels:
-        app: nginx
-    spec:
+        app: nginx #same label i have given as the label given to the pod
+    spec: #specifaction is related to container
       containers:
       - name: nginx
         image: nginx:1.14.2
