@@ -17,6 +17,6 @@ spec: #specification related to your deployment
     spec: #specifaction is related to container
       containers:
       - name: nginx
-        image: nginx:1.14.2
+        image: piuma/phpsysinfo
         ports:
         - containerPort: 80
