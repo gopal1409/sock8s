@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim #this api will allow my storage to be attached with my pod
+#we are telling the pod that there is a 5Gb of volume which can be consumed. 
+metadata:
+  name: azure-managed-disk-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce #ReadWriteMany Read
+  storageClassName: managed-premium-retain-sc
+  resources:
+    requests:
+      storage: 5Gi
