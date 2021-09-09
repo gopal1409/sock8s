@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: mysql
+spec:
+  replicas: 1 #so deployment will ensure that all the time we have 1 Pod running. 
+  selector:
+    matchLabels:
+      app: mysql 
+  strategy:
+    type: Recreate #if the pod goes down i want configmap and secret need to be added
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:5.6
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-db-password
+              key: db-password
+        ports:
+          - containerPort: 3306
+        #attach the storage
+        volumeMounts: #this is inside your container
+          - name: mysql-persistent-volume
+            mountPath: /var/lib/mysql #this is inisde your container. 
+          - name: usermanagement-db-creation-script  
+            mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: mysql-persistent-volume
+          persistentVolumeClaim:
+            claimName: azure-managed-disk-pvc
+        - name: usermanagement-db-creation-script  
+          configMap:
+            name: usermanagement-dbcreation-script
+  
