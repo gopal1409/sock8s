@@ -4,7 +4,7 @@ metadata:
   name: mysql
 spec:
   selector:
-    app: nginx 
+    app: mysql
   ports:
     - name: mysqlport
       port: 3306
