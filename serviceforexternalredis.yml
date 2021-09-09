@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service 
+metadata:
+  name: primary
+spec:
+  type: LoadBalancer #ClusterIP NodePort
+  selector:
+    name: redis-primary
+  ports:
+    - name: tomcat
+      port: 6379 #service port
+      targetPort: 6379 #containerPort
