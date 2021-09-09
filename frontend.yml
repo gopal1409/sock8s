@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: usermgmt-webapp
+spec:
+  replicas: 1 #so deployment will ensure that all the time we have 1 Pod running. 
+  selector:
+    matchLabels:
+      app: usermgmt-webapp
+  strategy:
+    type: Recreate #if the pod goes down i want configmap and secret need to be added
+  template:
+    metadata:
+      labels:
+        app: usermgmt-webapp
+    spec:
+      containers:
+        - name: usermgmt-webapp
+          image: stacksimplify/kube-usermgmt-webapp:1.0.0-MySQLDB
+          ports:
+            - containerPort: 8080
+          env:
+          - name: DB_HOSTNAME
+            value: "mysql"
+          - name: DB_PORT
+            value: "3306"
+          - name: "DB_NAME"
+            value: "webappdb"
+          - name: "DB_USERNAME"
+            value: "root"
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-db-password
+                key: db-password
+          
