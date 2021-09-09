@@ -17,20 +17,20 @@ spec:
       containers:
         - name: mysql
           image: mysql:5.6
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-db-password
-              key: db-password
-        ports:
-          - containerPort: 3306
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-db-password
+                key: db-password
+          ports:
+            - containerPort: 3306
         #attach the storage
-        volumeMounts: #this is inside your container
-          - name: mysql-persistent-volume
-            mountPath: /var/lib/mysql #this is inisde your container. 
-          - name: usermanagement-db-creation-script  
-            mountPath: /docker-entrypoint-initdb.d
+          volumeMounts: #this is inside your container
+            - name: mysql-persistent-volume
+              mountPath: /var/lib/mysql #this is inisde your container. 
+            - name: usermanagement-db-creation-script  
+              mountPath: /docker-entrypoint-initdb.d
       volumes:
         - name: mysql-persistent-volume
           persistentVolumeClaim:
